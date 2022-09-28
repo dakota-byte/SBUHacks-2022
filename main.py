@@ -17,6 +17,8 @@ PROMPT_FONT = pygame.font.SysFont('comicsans', 17)
 BOOK_FONT = pygame.font.SysFont('times', 18)
 BREW_FONT = pygame.font.SysFont('times', 13, bold = True)
 HEADER_FONT = pygame.font.SysFont('times', 45, bold = True)
+font = pygame.font.SysFont('Consolas', 30)
+
 correctCounter = 2
 wrongCounter = 5
 defaultCountTime = 15
@@ -292,7 +294,7 @@ def changePotSelection():
 
 
 # Draw 
-def draw_window(bookOpened, playingGame, loadingScreen):
+def draw_window(bookOpened, playingGame, loadingScreen, text, highscore):
     # Always in the back
     WIN.blit(BackgroundImage, (0, 0))
     WIN.blit(ShopImage,(450-(SHOPHEIGHT/2),250))
@@ -379,6 +381,14 @@ def draw_window(bookOpened, playingGame, loadingScreen):
         WIN.blit(SparkPot1, (590,90))
         WIN.blit(SparkPot2, (180,90))
 
+    if not loadingScreen:
+            WIN.blit(font.render(text, True, (0, 0, 0)), (4, 9))
+    else:
+        WIN.blit(font.render("HIGHSCORE: " + str(highscore), True, WHITE), (348, 450))
+
+    if not playingGame:
+        WIN.blit(font.render("HIGHSCORE: " + str(highscore), True, WHITE), (348, 450))
+
     pygame.display.update()
 
 # Wrap method
@@ -451,7 +461,6 @@ def main():
     clock = pygame.time.Clock()
     counter, text = defaultCountTime, str(defaultCountTime).rjust(3)
     pygame.time.set_timer(pygame.USEREVENT, 1000)
-    font = pygame.font.SysFont('Consolas', 30)
 
     run = True
     playingGame = True
@@ -530,16 +539,8 @@ def main():
 
             # create hover text
 
-        draw_window(bookOpened, playingGame, loadingScreen)
+        draw_window(bookOpened, playingGame, loadingScreen, text, highscore)
 
-        if not loadingScreen:
-            WIN.blit(font.render(text, True, (0, 0, 0)), (4, 9))
-        else:
-            WIN.blit(font.render("HIGHSCORE: " + str(highscore), True, WHITE), (348, 450))
-
-        if not playingGame:
-            WIN.blit(font.render("HIGHSCORE: " + str(highscore), True, WHITE), (348, 450))
-        pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
