@@ -1,2 +1,2 @@
 # SBUHacks-2022
-potion game
+Game submission for SBUHacks 2022
